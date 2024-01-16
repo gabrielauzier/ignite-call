@@ -8,15 +8,27 @@ import {
   RegisterFormData,
   registerFormSchema,
 } from '@/website/registration/validation/schemas'
+import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 export default function Register() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
+
+  const query = useSearchParams()
+
+  useEffect(() => {
+    const username = query.get('username')
+    if (username) {
+      setValue('username', username)
+    }
+  }, [query, setValue])
 
   function handleRegister(data: RegisterFormData) {
     console.log(data)
