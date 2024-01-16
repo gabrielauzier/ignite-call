@@ -1,5 +1,3 @@
-import { Heading } from '@ignite-ui/react'
+import { makeHomePage } from '@/website/home/presentation/factories'
 
-export default function Home() {
-  return <Heading as="h1">Hello, brave new world!</Heading>
-}
+export default () => makeHomePage()
