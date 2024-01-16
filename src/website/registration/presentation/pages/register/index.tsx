@@ -10,8 +10,14 @@ import {
 } from '@/website/registration/validation/schemas'
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { AbstractRegisterUserUsecase } from '@/website/registration/domain'
+import { logger } from '@/common/util'
 
-export default function Register() {
+interface RegisterProps {
+  register: AbstractRegisterUserUsecase
+}
+
+export default function Register({ register: registerUsecase }: RegisterProps) {
   const {
     register,
     handleSubmit,
@@ -30,8 +36,13 @@ export default function Register() {
     }
   }, [query, setValue])
 
-  function handleRegister(data: RegisterFormData) {
-    console.log(data)
+  async function handleRegister(data: RegisterFormData) {
+    try {
+      await registerUsecase.execute({
+        name: data.name,
+        username: data.username,
+      })
+    } catch (error) {}
   }
 
   return (
