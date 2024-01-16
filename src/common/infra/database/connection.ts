@@ -1,11 +1,3 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaDatabaseConnection } from './prisma'
 
-export class DatabaseConnection {
-  private readonly connection: PrismaClient = new PrismaClient({
-    log: ['query'],
-  })
-
-  public getConnection(): PrismaClient {
-    return this.connection
-  }
-}
+export const database = PrismaDatabaseConnection.getInstance().getConnection()
