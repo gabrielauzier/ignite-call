@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   ClaimUsernameFormData,
   ClaimUsernameFormSchema,
-} from '../../validation/schemas'
+} from '../../../validation/schemas'
 
 export function ClaimUsernameForm() {
   const {
