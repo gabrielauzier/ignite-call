@@ -2,8 +2,20 @@ import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
 import { Container, Header } from '../register/styles'
 import { ConnectBox, ConnectItem } from './styles'
+import { AbstractSignInUsecase } from '@/website/auth/domain/usecases'
+import { signIn } from 'next-auth/react'
 
-export default function ConnectCalendar() {
+interface ConnectCalendarProps {
+  authenticate: AbstractSignInUsecase
+}
+
+export default function ConnectCalendar({
+  authenticate,
+}: ConnectCalendarProps) {
+  async function handleConnect() {
+    await authenticate.execute()
+  }
+
   return (
     <Container>
       <Header>
@@ -19,7 +31,7 @@ export default function ConnectCalendar() {
       <ConnectBox>
         <ConnectItem>
           <Text>Google Calendar</Text>
-          <Button variant="secondary" size="sm">
+          <Button variant="secondary" size="sm" onClick={handleConnect}>
             Conectar
             <ArrowRight />
           </Button>
