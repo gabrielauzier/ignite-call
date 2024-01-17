@@ -9,7 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   ClaimUsernameFormData,
   ClaimUsernameFormSchema,
-} from '../../validation/schemas'
+} from '../../../validation/schemas'
+import { useRouter } from 'next/navigation'
 
 export function ClaimUsernameForm() {
   const {
@@ -20,8 +21,12 @@ export function ClaimUsernameForm() {
     resolver: zodResolver(ClaimUsernameFormSchema),
   })
 
+  const router = useRouter()
+
   async function handleClaimUsername(data: ClaimUsernameFormData) {
-    console.log(data)
+    const { username } = data
+
+    router.push(`/register?username=${username}`)
   }
 
   return (
