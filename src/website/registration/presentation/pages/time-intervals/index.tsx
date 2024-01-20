@@ -8,7 +8,6 @@ import {
 } from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import { Container, Header } from '../register/styles'
 
@@ -20,10 +19,11 @@ import {
   IntervalInputs,
   IntervalItem,
 } from './styles'
-import { getWeekDays } from '@/common/util/get-week-days'
+import { getWeekDays } from '@/common/util'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  TimeIntervalsFormData,
+  TimeIntervalsFormInput,
+  TimeIntervalsFormOutput,
   timeIntervalsFormSchema,
 } from '@/website/registration/validation/schemas'
 
@@ -34,20 +34,22 @@ export default function TimeIntervals() {
     control,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm({
-    resolver: zodResolver(timeIntervalsFormSchema),
-    defaultValues: {
-      intervals: [
-        { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 1, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 2, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 5, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' },
-      ],
-    },
-  })
+  } =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    useForm<TimeIntervalsFormInput, any, TimeIntervalsFormOutput>({
+      resolver: zodResolver(timeIntervalsFormSchema),
+      defaultValues: {
+        intervals: [
+          { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 1, enabled: true, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 2, enabled: true, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 5, enabled: true, startTime: '08:00', endTime: '18:00' },
+          { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' },
+        ],
+      },
+    })
 
   const weekDays = getWeekDays()
 
@@ -58,7 +60,7 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals')
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormData) {
+  async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
     console.log(data)
   }
 
