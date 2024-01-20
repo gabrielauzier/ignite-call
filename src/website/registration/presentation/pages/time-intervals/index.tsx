@@ -9,8 +9,6 @@ import {
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
-import { Container, Header } from '../register/styles'
-
 import {
   FormError,
   IntervalBox,
@@ -27,7 +25,7 @@ import {
   timeIntervalsFormSchema,
 } from '@/website/registration/validation/schemas'
 import { AbstractRegisterTimeIntervalsUsecase } from '@/website/registration/domain'
-import { useRouter } from 'next/navigation'
+import { Container, Header } from '../../styles'
 
 interface TimeIntervalsProps {
   registerTimeIntervals: AbstractRegisterTimeIntervalsUsecase

@@ -1,19 +1,19 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Heading, MultiStep, Text, TextInput } from '@ignite-ui/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 
-import { Container, Form, FormError, Header } from './styles'
 import {
   RegisterFormData,
   registerFormSchema,
 } from '@/website/registration/validation/schemas'
-import { useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { AbstractRegisterUserUsecase } from '@/website/registration/domain'
-import { logger } from '@/common/util'
-import { AxiosError } from 'axios'
 import { SystemError } from '@/common/domain/errors'
+
+import { Form, FormError } from './styles'
+import { Container, Header } from '../../styles'
 
 interface RegisterProps {
   register: AbstractRegisterUserUsecase

@@ -1,10 +1,10 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
 import { ArrowRight, Check } from 'phosphor-react'
-import { Container, Header } from '../register/styles'
 import { AuthError, ConnectBox, ConnectItem } from './styles'
 import { AbstractSignInUsecase } from '@/website/auth/domain/usecases'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { Container, Header } from '../../styles'
 
 interface ConnectCalendarProps {
   authenticate: AbstractSignInUsecase
