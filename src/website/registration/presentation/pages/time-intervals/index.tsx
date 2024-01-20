@@ -26,8 +26,15 @@ import {
   TimeIntervalsFormOutput,
   timeIntervalsFormSchema,
 } from '@/website/registration/validation/schemas'
+import { AbstractRegisterTimeIntervalsUsecase } from '@/website/registration/domain'
 
-export default function TimeIntervals() {
+interface TimeIntervalsProps {
+  registerTimeIntervals: AbstractRegisterTimeIntervalsUsecase
+}
+
+export default function TimeIntervals({
+  registerTimeIntervals,
+}: TimeIntervalsProps) {
   const {
     register,
     handleSubmit,
@@ -60,8 +67,10 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals')
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
-    console.log(data)
+  async function handleSetTimeIntervals({
+    intervals,
+  }: TimeIntervalsFormOutput) {
+    await registerTimeIntervals.execute(intervals)
   }
 
   return (
