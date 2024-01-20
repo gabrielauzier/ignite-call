@@ -27,6 +27,7 @@ import {
   timeIntervalsFormSchema,
 } from '@/website/registration/validation/schemas'
 import { AbstractRegisterTimeIntervalsUsecase } from '@/website/registration/domain'
+import { useRouter } from 'next/navigation'
 
 interface TimeIntervalsProps {
   registerTimeIntervals: AbstractRegisterTimeIntervalsUsecase
@@ -70,7 +71,11 @@ export default function TimeIntervals({
   async function handleSetTimeIntervals({
     intervals,
   }: TimeIntervalsFormOutput) {
-    await registerTimeIntervals.execute(intervals)
+    try {
+      await registerTimeIntervals.execute({ intervals })
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (

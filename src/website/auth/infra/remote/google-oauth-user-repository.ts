@@ -5,7 +5,7 @@ import { ISignIn } from '../../domain/usecases'
 
 export class GoogleOAuthUserRepository implements AbstractUserRepository {
   async auth(): Promise<void> {
-    await signIn('google', { callbackUrl: '/connect-calendar' })
+    await signIn('google', { callbackUrl: '/register/connect-calendar' })
   }
 
   async getAuthenticated(): Promise<ISignIn.Result> {

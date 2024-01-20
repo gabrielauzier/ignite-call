@@ -9,7 +9,7 @@ import {
   registerFormSchema,
 } from '@/website/registration/validation/schemas'
 import { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { AbstractRegisterUserUsecase } from '@/website/registration/domain'
 import { logger } from '@/common/util'
 import { AxiosError } from 'axios'
@@ -30,6 +30,7 @@ export default function Register({ register: registerUsecase }: RegisterProps) {
   })
 
   const query = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     const username = query.get('username')
@@ -44,6 +45,7 @@ export default function Register({ register: registerUsecase }: RegisterProps) {
         name: data.name,
         username: data.username,
       })
+      router.push('/register/connect-calendar')
     } catch (err) {
       if (err instanceof SystemError) {
         alert('Nome de usuário já existente. ')
