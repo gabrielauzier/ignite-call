@@ -13,6 +13,7 @@ import { z } from 'zod'
 import { Container, Header } from '../register/styles'
 
 import {
+  FormError,
   IntervalBox,
   IntervalContainer,
   IntervalDay,
@@ -20,8 +21,11 @@ import {
   IntervalItem,
 } from './styles'
 import { getWeekDays } from '@/common/util/get-week-days'
-
-const timeIntervalsFormSchema = z.object({})
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  TimeIntervalsFormData,
+  timeIntervalsFormSchema,
+} from '@/website/registration/validation/schemas'
 
 export default function TimeIntervals() {
   const {
@@ -31,6 +35,7 @@ export default function TimeIntervals() {
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
+    resolver: zodResolver(timeIntervalsFormSchema),
     defaultValues: {
       intervals: [
         { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
@@ -53,7 +58,9 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals')
 
-  async function handleSetTimeIntervals() {}
+  async function handleSetTimeIntervals(data: TimeIntervalsFormData) {
+    console.log(data)
+  }
 
   return (
     <Container>
@@ -91,6 +98,7 @@ export default function TimeIntervals() {
                 </IntervalDay>
                 <IntervalInputs>
                   <TextInput
+                    crossOrigin={undefined}
                     size="sm"
                     type="time"
                     step={60}
@@ -98,6 +106,7 @@ export default function TimeIntervals() {
                     {...register(`intervals.${index}.startTime`)}
                   />
                   <TextInput
+                    crossOrigin={undefined}
                     size="sm"
                     type="time"
                     step={60}
@@ -110,7 +119,11 @@ export default function TimeIntervals() {
           })}
         </IntervalContainer>
 
-        <Button type="submit">
+        {errors.intervals && (
+          <FormError size="sm">{errors.intervals.message}</FormError>
+        )}
+
+        <Button type="submit" disabled={isSubmitting}>
           Próximo passo
           <ArrowRight />
         </Button>
