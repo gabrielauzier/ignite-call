@@ -1,9 +1,11 @@
 export namespace IRegisterTimeIntervals {
   export type Params = {
-    weekDay: number
-    startTimeInMinutes: number
-    endTimeInMinutes: number
-  }[]
+    intervals: {
+      weekDay: number
+      startTimeInMinutes: number
+      endTimeInMinutes: number
+    }[]
+  }
   export type Result = void
 }
 
