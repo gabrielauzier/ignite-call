@@ -26,6 +26,7 @@ import {
 } from '@/website/registration/validation/schemas'
 import { AbstractRegisterTimeIntervalsUsecase } from '@/website/registration/domain'
 import { Container, Header } from '../../styles'
+import { useRouter } from 'next/navigation'
 
 interface TimeIntervalsProps {
   registerTimeIntervals: AbstractRegisterTimeIntervalsUsecase
@@ -58,6 +59,7 @@ export default function TimeIntervals({
     })
 
   const weekDays = getWeekDays()
+  const router = useRouter()
 
   const { fields } = useFieldArray({
     control,
@@ -71,6 +73,8 @@ export default function TimeIntervals({
   }: TimeIntervalsFormOutput) {
     try {
       await registerTimeIntervals.execute({ intervals })
+
+      router.push('/register/update-profile')
     } catch (error) {
       alert(error)
     }
