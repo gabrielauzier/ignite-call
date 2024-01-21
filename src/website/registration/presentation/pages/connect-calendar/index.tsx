@@ -1,9 +1,10 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
-import { ArrowRight } from 'phosphor-react'
-import { Container, Header } from '../register/styles'
-import { ConnectBox, ConnectItem } from './styles'
+import { ArrowRight, Check } from 'phosphor-react'
+import { AuthError, ConnectBox, ConnectItem } from './styles'
 import { AbstractSignInUsecase } from '@/website/auth/domain/usecases'
-import { signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { Container, Header } from '../../styles'
 
 interface ConnectCalendarProps {
   authenticate: AbstractSignInUsecase
@@ -12,8 +13,18 @@ interface ConnectCalendarProps {
 export default function ConnectCalendar({
   authenticate,
 }: ConnectCalendarProps) {
+  const session = useSession()
+  const router = useRouter()
+
+  const hasAuthError = !!router.query.error
+  const isSignedId = session.status === 'authenticated'
+
   async function handleConnect() {
     await authenticate.execute()
+  }
+
+  async function handleNextStep() {
+    router.push('/register/time-intervals')
   }
 
   return (
@@ -31,13 +42,27 @@ export default function ConnectCalendar({
       <ConnectBox>
         <ConnectItem>
           <Text>Google Calendar</Text>
-          <Button variant="secondary" size="sm" onClick={handleConnect}>
-            Conectar
-            <ArrowRight />
-          </Button>
+          {isSignedId ? (
+            <Button size="sm" disabled>
+              Conectado
+              <Check />
+            </Button>
+          ) : (
+            <Button variant="secondary" size="sm" onClick={handleConnect}>
+              Conectar
+              <ArrowRight />
+            </Button>
+          )}
         </ConnectItem>
 
-        <Button type="submit">
+        {hasAuthError && (
+          <AuthError size="sm">
+            Falha ao se conectar ao Google, verifique se você habilitou as
+            permissões de acesso ao Google Calendar
+          </AuthError>
+        )}
+
+        <Button type="submit" disabled={!isSignedId} onClick={handleNextStep}>
           Próximo passo
           <ArrowRight />
         </Button>

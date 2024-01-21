@@ -1,6 +1,6 @@
-import { styled, Box, Text } from '@ignite-ui/react'
+import { Box, styled, Text } from '@ignite-ui/react'
 
-export const Form = styled(Box, {
+export const ProfileBox = styled(Box, {
   marginTop: '$6',
   display: 'flex',
   flexDirection: 'column',
@@ -13,6 +13,6 @@ export const Form = styled(Box, {
   },
 })
 
-export const FormError = styled(Text, {
-  color: '#f75a68',
+export const FormAnnotation = styled(Text, {
+  color: '$gray200',
 })
