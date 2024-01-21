@@ -1,8 +1,7 @@
 import { Avatar, Heading, Text } from '@ignite-ui/react'
-import { GetStaticPaths, GetStaticProps } from 'next'
 import { Container, UserHeader } from './styles'
 
-import { database } from '@/common/infra/database/connection'
+import { ScheduleForm } from '../../components/schedule-form'
 
 interface ScheduleProps {
   user: {
@@ -20,6 +19,8 @@ export default function Schedule({ user }: ScheduleProps) {
         <Heading>{user.name}</Heading>
         <Text>{user.bio}</Text>
       </UserHeader>
+
+      <ScheduleForm />
     </Container>
   )
 }
