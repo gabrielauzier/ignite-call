@@ -9,17 +9,37 @@ import {
 } from './styles'
 import { getWeekDays } from '@/common/util'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 export function Calendar() {
   const [currentDate, setCurrentDate] = useState(() => {
     return dayjs().set('date', 1)
   })
 
+  const shortWeekDays = getWeekDays({ short: true })
+
   const currentMonth = currentDate.format('MMMM')
   const currentYear = currentDate.format('YYYY')
 
-  const shortWeekDays = getWeekDays({ short: true })
+  const calendarWeeks = useMemo(() => {
+    const daysInMonthArray = Array.from({
+      length: currentDate.daysInMonth(),
+    }).map((_, index) => {
+      return currentDate.set('date', index + 1)
+    })
+
+    const firstWeekDay = currentDate.get('day')
+
+    const previousMonthFillArray = Array.from({
+      length: firstWeekDay,
+    })
+      .map((_, index) => {
+        return currentDate.subtract(index + 1, 'day')
+      })
+      .reverse()
+
+    return [...previousMonthFillArray, ...daysInMonthArray]
+  }, [currentDate])
 
   function handlePreviousMonth() {
     const previousMonthDate = currentDate.subtract(1, 'month')
