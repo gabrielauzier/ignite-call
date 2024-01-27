@@ -1,3 +1,5 @@
+import '@/common/infra/date-locale/dayjs'
+
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import { globalStyles } from '@/common/presentation/styles/global'
